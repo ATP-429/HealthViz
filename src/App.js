@@ -156,6 +156,7 @@ function App() {
               height: '',
               goal: ''
             });
+            setLoading(false)
           });
       }
     }, [username]);
@@ -315,8 +316,8 @@ function App() {
               >
                 <option value="">Select Goal</option>
                 <option value="muscle_building">Muscle Building</option>
-                <option value="fitness">Fitness</option>
-                <option value="strength_training">Strength Training</option>
+                <option value="fitness">Weight Loss</option>
+                <option value="strength_training">Health</option>
               </select>
             </label>
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -358,18 +359,39 @@ function App() {
   
     const tableStyle = {
       width: '80%',
-      margin: '20px auto',
+      margin: '50px auto', // More margin for better spacing
       borderCollapse: 'collapse',
-      backgroundColor: 'white'  // Setting the background color of the table to white
-  };
-  
+      backgroundColor: 'white',
+      boxShadow: '0 2px 5px rgba(0,0,0,0.1)' // Add shadow for depth
+    };
   
     const thTdStyle = {
       border: '1px solid #ddd',
-      padding: '8px',
-      textAlign: 'left'
+      padding: '10px', // Increased padding for a better look
+      textAlign: 'left',
+      fontSize: '16px' // Larger font size for better readability
     };
-  
+
+    const paginationStyle = {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      margin: '20px 0', // Spacing around pagination controls
+      fontSize: '18px', // Larger font size for page numbers
+      fontFamily: 'Arial, sans-serif' // More professional font family
+    };
+
+    const buttonStyle = {
+      padding: '8px 16px', // Padding around text
+      margin: '0 5px', // Space between buttons
+      background: '#007BFF', // A nice blue
+      color: 'white', // White text color
+      border: 'none', // No border
+      borderRadius: '5px', // Rounded corners
+      cursor: 'pointer', // Cursor indicates clickable
+      fontSize: '16px'
+    };
+
     // Calculate the number of pages
     const pageCount = Math.ceil(data.length / itemsPerPage);
   
@@ -391,12 +413,13 @@ function App() {
   
     return (
       <div>
-        <div>
-          <button onClick={prevPage} disabled={currentPage === 0}>Prev</button>
-          <button onClick={nextPage} disabled={currentPage === pageCount - 1}>Next</button>
-          <button onClick={() => filterData('month')}>Month</button>
-          <button onClick={() => filterData('year')}>Year</button>
-          <span>Page {currentPage + 1} of {pageCount}</span>
+        <div style={paginationStyle}>
+          <button style={buttonStyle} onClick={prevPage} disabled={currentPage === 0}>Prev</button>
+          <h3 style={{
+            color: 'white',
+            textShadow: '2px 2px 4px black'  // White text with black border
+          }}> Page {currentPage + 1} of {pageCount} </h3>
+          <button style={buttonStyle} onClick={nextPage} disabled={currentPage === pageCount - 1}>Next</button>
         </div>
         <table style={tableStyle}>
           <thead>
@@ -418,7 +441,7 @@ function App() {
         </table>
       </div>
     );
-  };
+};
   
   return (
     <Router>
@@ -553,7 +576,7 @@ function App() {
             textShadow: '2px 2px 4px black'  // White text with black border
           }}>Hello, {username}</h2>
           
-          <PaginatedTable data={data} itemsPerPage={20}></PaginatedTable>
+          <PaginatedTable data={data} itemsPerPage={5}></PaginatedTable>
             </div>
           )} />
         </Routes>
